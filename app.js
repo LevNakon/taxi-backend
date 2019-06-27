@@ -28,6 +28,6 @@ sequelize.
     .then(res => {
         app.listen(8080);
     })
-    .catch(err => {
-        console.log(err);
+    .catch(error => {
+        console.log(error);
     });

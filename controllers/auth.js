@@ -18,8 +18,8 @@ exports.signup = async (req, res, next) => {
         const hashedPassword = await bcrypt.hash(password, 12);
         const user = await User.create({ email, firstName, lastName, birthdayDate, password: hashedPassword });
         res.status(201).json({ message: 'User created!', userId: user.id });
-    } catch (err) {
-        error505(err, next);
+    } catch (error) {
+        error505(error, next);
     }
 };
 
@@ -47,8 +47,10 @@ exports.login = async (req, res, next) => {
             'lev_nakonechnyy_token_key',
             { expiresIn: '2h' });
         res.status(200).json({ token, userId: id });
-    } catch (err) {
-        error505(err, next);
+        return;
+    } catch (error) {
+        error505(error, next);
+        return error;
     }
 
 };
