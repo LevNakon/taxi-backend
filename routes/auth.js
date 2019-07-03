@@ -7,13 +7,13 @@ const authController = require('../controllers/auth');
 const router = express.Router();
 
 /**
- * PUT /auth/signup create or update user
+ * POST /auth/signup
  */
-router.put('/signup', [
+router.post('/signup', [
     body('email')
         .isEmail()
         .withMessage('Please enter a valid email.')
-        .custom((value, { req }) => {
+        .custom((value) => {
             return User.findOne({ where: { email: value } })
                 .then(user => {
                     if (user) {
@@ -24,7 +24,7 @@ router.put('/signup', [
         .normalizeEmail(),
     body('password')
         .trim()
-        .isLength({ min: 5 }),
+        .isLength({ min: 6 }),
     body('firstName')
         .trim()
         .not()
@@ -33,7 +33,7 @@ router.put('/signup', [
         .trim()
         .not()
         .isEmpty(),
-    body('birthdayDate')
+    body('gender')
         .trim()
         .not()
         .isEmpty()
@@ -42,8 +42,15 @@ router.put('/signup', [
 
 
 /**
- * POST /auth/login
+ * POST /auth/signin
  */
-router.post('/login', authController.login);
+router.post('/signin', [
+    body('email')
+        .isEmail()
+        .normalizeEmail(),
+    body('password')
+        .trim()
+        .isLength({ min: 6 })
+], authController.signin);
 
 module.exports = router;

@@ -16,9 +16,10 @@ describe('auth controller - login', function () {
                 password: 'tester'
             }
         };
-        authController.login(req, {}, () => { }).then(result => {
+        authController.signin(req, {}, () => { }).then(result => {
             expect(result).to.be.an('error');
             expect(result).to.have.property('statusCode', 500);
+            expect(result).to.have.property('success', false);
             done();
         });
         User.findOne.restore();
@@ -32,9 +33,10 @@ describe('auth controller - login', function () {
                 password: 'tester'
             }
         };
-        authController.login(req, {}, () => { }).then(result => {
+        authController.signin(req, {}, () => { }).then(result => {
             expect(result).to.be.an('error');
             expect(result).to.have.property('statusCode', 401);
+            expect(result).to.have.property('success', false);
             done();
         });
         User.findOne.restore();
@@ -49,9 +51,10 @@ describe('auth controller - login', function () {
                 password: 'tester'
             }
         };
-        authController.login(req, {}, () => { }).then(result => {
+        authController.signin(req, {}, () => { }).then(result => {
             expect(result).to.be.an('error');
             expect(result).to.have.property('statusCode', 401);
+            expect(result).to.have.property('success', false);
             done();
         });
         User.findOne.restore();

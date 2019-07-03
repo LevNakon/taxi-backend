@@ -17,6 +17,10 @@ const User = sequelize.define('user', {
         type: Sequelize.STRING,
         allowNull: false
     },
+    gender: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
     email: {
         type: Sequelize.STRING,
         allowNull: false
@@ -27,7 +31,28 @@ const User = sequelize.define('user', {
     },
     birthdayDate: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true,
+        defaultValue: null
+    },
+    avatarUrl: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: null
+    },
+    mobileNumber: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: null
+    },
+    homeAddress: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: null
+    },
+    workAddress: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: null
     }
 },
     {
