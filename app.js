@@ -3,6 +3,11 @@ const bodyParser = require('body-parser');
 
 const sequelize = require('./util/database');
 const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
+
+const User = require('./models/user');
+const Driver = require('./models/driver');
+const Car = require('./models/car');
 
 const app = express();
 
@@ -16,14 +21,21 @@ app.use((req, res, next) => {
 });
 
 app.use('/auth', authRoutes);
+app.use('/user', userRoutes);
 
 app.use((error, req, res, next) => {
     const { statusCode = 500, success = false, message = '' } = error;
     res.status(statusCode).json({ message, success });
 });
 
+User.belongsTo(Driver, { constraints: true, onUpdate: 'CASCADE' });
+Driver.hasOne(User);
+
+Driver.belongsTo(Car, { constraints: true, onDelete: 'CASCADE' });
+Car.hasOne(Driver);
+
 sequelize.
-    //sync({ force: true })
+    // sync({ force: true })
     sync()
     .then(res => {
         app.listen(8080);

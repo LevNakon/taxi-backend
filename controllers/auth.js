@@ -55,7 +55,7 @@ exports.signin = async (req, res, next) => {
             },
             'lev_nakonechnyy_token_key',
             { expiresIn: '24h' });
-        res.status(200).json({ message: 'Sign In successful!', success: true, token, userId: id });
+        res.status(200).json({ message: 'Sign In successful!', success: true, token });
         return;
     } catch (error) {
         error505(error, next);
