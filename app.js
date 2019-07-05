@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const sequelize = require('./util/database');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
+const driverRoutes = require('./routes/driver');
+const carRoutes = require('./routes/car');
 
 const User = require('./models/user');
 const Driver = require('./models/driver');
@@ -22,6 +24,8 @@ app.use((req, res, next) => {
 
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
+app.use('/driver', driverRoutes);
+app.use('/car', carRoutes);
 
 app.use((error, req, res, next) => {
     const { statusCode = 500, success = false, message = '' } = error;

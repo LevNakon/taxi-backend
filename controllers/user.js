@@ -24,7 +24,6 @@ exports.userUpdate = async (req, res, next) => {
     const { userId } = req;
     const { firstName, lastName, email, birthdayDate, mobileNumber, homeAddress, workAddress, } = req.body;
     const errors = validationResult(req);
-    console.log(errors);
     try {
         if (!errors.isEmpty()) {
             const error = new Error('Validation failed!');
