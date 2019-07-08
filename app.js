@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const socketpool = require('pool.socket.io');
 
 const sequelize = require('./util/database');
 const authRoutes = require('./routes/auth');
@@ -18,7 +19,7 @@ app.use(bodyParser.json());
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization,X-Requested-With');
     next();
 });
 
@@ -42,7 +43,18 @@ sequelize.
     // sync({ force: true })
     sync()
     .then(res => {
-        app.listen(8080);
+        const server = app.listen(8080);
+        const connectionManager = socketpool.default(server);
+        connectionManager.onConnection((connection, pool) => {
+            connection.on('message', (message) => {
+                // console.log('message', message, pool.eio);
+                // console.log(pool.clients());
+                console.log(connection.id);
+            })
+
+            connection.on('disconnect', () => {
+            });
+        });
     })
     .catch(error => {
         console.log(error);

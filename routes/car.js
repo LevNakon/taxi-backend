@@ -29,6 +29,28 @@ router.post('/create', isAuth, [
 ], carController.createCar);
 
 /**
+ * PUT /car/update
+ */
+router.put('/update', isAuth, [
+    body('brand')
+        .trim()
+        .not()
+        .isEmpty(),
+    body('model')
+        .trim()
+        .not()
+        .isEmpty(),
+    body('year')
+        .trim()
+        .not()
+        .isEmpty(),
+    body('run')
+        .trim()
+        .not()
+        .isEmpty()
+], carController.updateCar);
+
+/**
  * GET /car/:carId
  */
 router.get('/:carId', isAuth, carController.getCar);

@@ -21,6 +21,20 @@ router.post('/create', isAuth, [
 ], driverController.createDriver);
 
 /**
+ * PUT /driver/update
+ */
+router.put('/update', isAuth, [
+    body('experience')
+        .trim()
+        .not()
+        .isEmpty(),
+    body('condition')
+        .trim()
+        .not()
+        .isEmpty()
+], driverController.updateDriver);
+
+/**
  * GET /driver/:driverId
  */
 router.get('/:driverId', isAuth, driverController.getDriver);
