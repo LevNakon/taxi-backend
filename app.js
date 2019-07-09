@@ -43,16 +43,28 @@ sequelize.
     // sync({ force: true })
     sync()
     .then(res => {
+        const availableTrips = [];
         const server = app.listen(8080);
         const connectionManager = socketpool.default(server);
         connectionManager.onConnection((connection, pool) => {
-            connection.on('message', (message) => {
-                // console.log('message', message, pool.eio);
-                // console.log(pool.clients());
-                console.log(connection.id);
-            })
+
+            connection.on('trip', ({ name, id, location }) => {
+                availableTrips.push({ name, id, location, socketId: connection.socket.id })
+                pool.to('driver room').emit('user trip', availableTrips);
+            });
+
+            // connection.
+
+            connection.on('join driver',()=>{
+                connection.socket.join('driver room');
+            });
+
+            connection.on('leave driver',()=>{
+                connection.socket.leave('driver room');
+            });
 
             connection.on('disconnect', () => {
+
             });
         });
     })
