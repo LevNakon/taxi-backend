@@ -1,16 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const socketpool = require('pool.socket.io');
 
 const sequelize = require('./util/database');
+const { taxiSocket } = require('./util/socket');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const driverRoutes = require('./routes/driver');
 const carRoutes = require('./routes/car');
+const tripRoutes = require('./routes/trip');
 
 const User = require('./models/user');
 const Driver = require('./models/driver');
 const Car = require('./models/car');
+const Trip = require('./models/trip');
 
 const app = express();
 
@@ -27,6 +29,7 @@ app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/driver', driverRoutes);
 app.use('/car', carRoutes);
+app.use('/trip', tripRoutes);
 
 app.use((error, req, res, next) => {
     const { statusCode = 500, success = false, message = '' } = error;
@@ -39,34 +42,15 @@ Driver.hasOne(User);
 Driver.belongsTo(Car, { constraints: true, onDelete: 'CASCADE' });
 Car.hasOne(Driver);
 
+Trip.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
+User.hasMany(Trip);
+
 sequelize.
     // sync({ force: true })
     sync()
     .then(res => {
-        const availableTrips = [];
         const server = app.listen(8080);
-        const connectionManager = socketpool.default(server);
-        connectionManager.onConnection((connection, pool) => {
-
-            connection.on('trip', ({ name, id, location }) => {
-                availableTrips.push({ name, id, location, socketId: connection.socket.id })
-                pool.to('driver room').emit('user trip', availableTrips);
-            });
-
-            // connection.
-
-            connection.on('join driver',()=>{
-                connection.socket.join('driver room');
-            });
-
-            connection.on('leave driver',()=>{
-                connection.socket.leave('driver room');
-            });
-
-            connection.on('disconnect', () => {
-
-            });
-        });
+        taxiSocket(server);
     })
     .catch(error => {
         console.log(error);

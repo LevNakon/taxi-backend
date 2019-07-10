@@ -8,7 +8,6 @@ exports.createDriver = async (req, res, next) => {
     const { userId } = req;
     const { experience, condition } = req.body;
     const errors = validationResult(req);
-    console.log(errors);
     try {
         if (!errors.isEmpty()) {
             const error = new Error('Validation failed!');
@@ -37,7 +36,6 @@ exports.updateDriver = async (req, res, next) => {
     const { userId } = req;
     const { experience, condition, driverId } = req.body;
     const errors = validationResult(req);
-    console.log(errors);
     try {
         if (!errors.isEmpty()) {
             const error = new Error('Validation failed!');
