@@ -16,9 +16,6 @@ const Driver = sequelize.define('driver', {
     condition: {
         type: Sequelize.STRING,
         allowNull: false
-    },
-    online: {
-        type: Sequelize.BOOLEAN,
     }
 },
     {
