@@ -6,5 +6,4 @@ const sequelize = new Sequelize('root', 'root', 'root',
         dialect: 'postgres'
     });
 
-
 module.exports = sequelize;
