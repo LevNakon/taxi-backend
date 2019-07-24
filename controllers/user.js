@@ -14,15 +14,15 @@ exports.userGet = async (req, res, next) => {
             throw error;
         }
         res.status(200).json({ message: 'User found!', success: true, user });
-
     } catch (error) {
         error505(error, next);
+        return error;
     }
 };
 
 exports.userUpdate = async (req, res, next) => {
     const { userId } = req;
-    const { firstName, lastName, email, birthdayDate, mobileNumber, homeAddress, workAddress, } = req.body;
+    const { firstName, lastName, email, birthdayDate, mobileNumber, homeAddress, workAddress } = req.body;
     const errors = validationResult(req);
     try {
         if (!errors.isEmpty()) {
@@ -49,5 +49,6 @@ exports.userUpdate = async (req, res, next) => {
         res.status(201).json({ message: 'User updated!', success: true });
     } catch (error) {
         error505(error, next);
+        return error;
     }
 };

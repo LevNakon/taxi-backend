@@ -39,6 +39,7 @@ exports.createCar = async (req, res, next) => {
         res.status(200).json({ message: 'Car created!', success: true, car });
     } catch (error) {
         error505(error, next);
+        return error;
     }
 };
 
@@ -88,6 +89,7 @@ exports.updateCar = async (req, res, next) => {
         res.status(200).json({ message: 'Car updated!', success: true, car });
     } catch (error) {
         error505(error, next);
+        return error;
     }
 };
 
@@ -125,5 +127,6 @@ exports.getCar = async (req, res, next) => {
         res.status(200).json({ message: 'Car found!', success: true, car });
     } catch (error) {
         error505(error, next);
+        return error;
     }
 };

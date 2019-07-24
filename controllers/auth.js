@@ -20,6 +20,7 @@ exports.signup = async (req, res, next) => {
         res.status(201).json({ message: 'User created!', success: true, user });
     } catch (error) {
         error505(error, next);
+        return error;
     }
 };
 
@@ -56,7 +57,6 @@ exports.signin = async (req, res, next) => {
             'lev_nakonechnyy_token_key',
             { expiresIn: '24h' });
         res.status(200).json({ message: 'Sign In successful!', success: true, token, user });
-        return;
     } catch (error) {
         error505(error, next);
         return error;

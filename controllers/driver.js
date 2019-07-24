@@ -29,6 +29,7 @@ exports.createDriver = async (req, res, next) => {
         res.status(200).json({ message: 'Driver created!', success: true, driver });
     } catch (error) {
         error505(error, next);
+        return error;
     }
 };
 
@@ -50,7 +51,7 @@ exports.updateDriver = async (req, res, next) => {
             error.success = false;
             throw error;
         }
-        if(user.driverId != driverId){
+        if (user.driverId != driverId) {
             const error = new Error('User could not update another driver.');
             error.statusCode = 500;
             error.success = false;
@@ -69,6 +70,7 @@ exports.updateDriver = async (req, res, next) => {
         res.status(200).json({ message: 'Driver updated!', success: true, driver });
     } catch (error) {
         error505(error, next);
+        return error;
     }
 };
 
@@ -83,7 +85,7 @@ exports.getDriver = async (req, res, next) => {
             error.success = false;
             throw error;
         }
-        if(user.driverId != driverId){
+        if (user.driverId != driverId) {
             const error = new Error('User could not load another driver.');
             error.statusCode = 500;
             error.success = false;
@@ -99,5 +101,6 @@ exports.getDriver = async (req, res, next) => {
         res.status(200).json({ message: 'Driver found!', success: true, driver });
     } catch (error) {
         error505(error, next);
+        return error;
     }
 };

@@ -26,15 +26,10 @@ exports.createTrip = async (req, res, next) => {
             endAddress,
             price
         });
-        if (!trip) {
-            const error = new Error('A trip could not be found.');
-            error.statusCode = 500;
-            error.success = false;
-            throw error;
-        }
         res.status(200).json({ message: 'Trip created!', success: true, trip });
     } catch (error) {
         error505(error, next);
+        return error;
     }
 };
 
@@ -48,9 +43,10 @@ exports.getTrips = async (req, res, next) => {
             error.success = false;
             throw error;
         }
-        const trips = await Trip.findAll({where: { userId }});
+        const trips = await Trip.findAll({ where: { userId } });
         res.status(200).json({ message: 'Trips found!', success: true, trips });
     } catch (error) {
         error505(error, next);
+        return error;
     }
 };
