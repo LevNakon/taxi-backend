@@ -27,7 +27,12 @@
     "pg-hstore": "^2.3.3",
     "pool.socket.io": "0.0.1",
     "sequelize": "^5.8.12",
-    "socket.io": "^2.2.0"
+    "socket.io": "^2.2.0",
+    "swagger-editor": "^3.6.31",
+    "swagger-jsdoc": "^3.3.0",
+    "swagger-ui-express": "^4.0.7",
+    "yaml": "^1.6.0",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",

@@ -89,7 +89,7 @@ describe('auth controller - sign in', function () {
         });
     });
 
-    it('should throw an error with code 401 if entered wrong password', function (done) {
+    it('should throw an error with code 500 if entered wrong password', function (done) {
         sinon.stub(User, 'findOne').returns({ id: 'testId', password: 'tester' });
         sinon.stub(bcrypt, 'compare').callsFake(() => undefined);
         const req = {
@@ -100,7 +100,7 @@ describe('auth controller - sign in', function () {
         };
         authController.signin(req, {}, () => { }).then(result => {
             expect(result).to.be.an('error');
-            expect(result).to.have.property('statusCode', 401);
+            expect(result).to.have.property('statusCode', 500);
             expect(result).to.have.property('success', false);
             done();
         }).then(() => {

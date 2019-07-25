@@ -1,6 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
 
+const swaggerDocument = YAML.load('./swagger.yml');
 const sequelize = require('./util/database');
 const { taxiSocket } = require('./util/socket');
 const authRoutes = require('./routes/auth');
@@ -15,6 +18,8 @@ const Car = require('./models/car');
 const Trip = require('./models/trip');
 
 const app = express();
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(bodyParser.json());
 

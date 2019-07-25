@@ -1,0 +1,466 @@
+swagger: "2.0"
+info:
+  description: Endpoints to test routes
+  version: "1.0.0"
+  title: Taxi Like Application API
+basePath: "/"
+host: 'localhost:8080'
+securityDefinitions:
+  bearerDefinitions:
+    type: "apiKey"
+    name: "Authorization"
+    scheme: "bearer"
+    in: "header"
+paths:
+  /auth/signin:
+    post:
+      tags:
+      -  Sign in & Sign up 
+      summary: Sign in as user
+      name: Sign in
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      responses:
+        '422':
+          description: Validation failed!
+        '401':
+          description: A user with this email could not be found.
+        '200':
+          description: Sign In successful!
+      parameters:
+      - in: body
+        name: body
+        discription: Sign in
+        schema:
+          type: object
+          required:
+            - email
+            - password
+          properties:
+            email:
+              type: string
+            password:
+              type: string
+              format: password
+  /auth/signup:
+    post:
+      tags:
+      - Sign in & Sign up 
+      summary: Sign up
+      name: Sign up
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      responses:
+        '422':
+          description: Validation failed!
+        '201':
+          description: User created!
+      parameters:
+      - in: body
+        name: body
+        discription: Sign up
+        schema:
+          type: object
+          required:
+            - email
+            - password
+            - firstName
+            - lastName
+            - gender
+          properties:
+            firstName:
+              type: string
+            lastName:
+              type: string
+            gender:
+              type: string
+            email:
+              type: string
+            password:
+              type: string
+              format: password
+  /user/info:
+    get:
+      tags:
+      - User 
+      summary: Get user
+      security:
+      - bearerAuth: []
+      name: Get user
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      responses:
+        '401':
+          description: A user could not be found.
+        '200':
+          description: User found!
+  /user/update:
+    put:
+      tags:
+      - User 
+      summary: Update user
+      security:
+      - bearerAuth: []
+      name: Update user
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      responses:
+        '422':
+          description: Validation failed!
+        '401':
+          description: A user could not be found.
+        '201':
+          description: User updated!
+      parameters:
+      - in: body
+        name: user
+        discription: Update user
+        schema:
+          type: object
+          properties:
+            firstName:
+              type: string
+            lastName:
+              type: string
+            email:
+              type: string
+              format: email
+            birthdayDate:
+              type: string
+            mobileNumber:
+              type: string
+            homeAddress:
+              type: string
+            workAddress:
+              type: string
+  /driver/{driverId}:
+    get:
+      tags:
+      - Driver 
+      summary: Get driver
+      security:
+      - bearerAuth: []
+      name: Get driver
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      responses:
+        '401':
+          description: A user could not be found.
+        '200':
+          description: Driver found!  
+      parameters:
+      - in: query
+        name: driverId
+        discription: Get driver
+        schema:
+          type: integer
+        required:
+          - driverId
+  /driver/create:
+    post:
+      tags:
+      -  Driver 
+      summary: Create driver
+      security:
+      - bearerAuth: []
+      name: Create driver
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      responses:
+        '422':
+          description: Validation failed!
+        '401':
+          description: A user could not be found.
+        '200':
+          description: Driver created!
+      parameters:
+      - in: body
+        name: driver
+        discription: Create driver
+        schema:
+          type: object
+          required:
+            - experience
+            - condition
+          properties:
+            experience:
+              type: string
+            condition:
+              type: string
+  /driver/update:
+    put:
+      tags:
+      -  Driver 
+      summary: Update driver
+      security:
+      - bearerAuth: []
+      name: Update driver
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      responses:
+        '422':
+          description: Validation failed!
+        '401':
+          description: A user could not be found.
+        '200':
+          description: Driver updated!
+      parameters:
+      - in: body
+        name: driver
+        discription: Update driver
+        schema:
+          type: object
+          required:
+            - driverId
+          properties:
+            experience:
+              type: string
+            condition:
+              type: string
+            driverId:
+              type: integer
+  /car/{carId}:
+    get:
+      tags:
+      - Car 
+      summary: Get car
+      security:
+      - bearerAuth: []
+      name: Get car
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      responses:
+        '401':
+          description: A user could not be found.
+        '200':
+          description: Car found!  
+      parameters:
+      - in: query
+        name: carId
+        discription: Get car
+        schema:
+          type: integer
+        required:
+          - carId
+  /car/create:
+    post:
+      tags:
+      -  Car 
+      summary: Create car
+      security:
+      - bearerAuth: []
+      name: Create car
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      responses:
+        '422':
+          description: Validation failed!
+        '401':
+          description: A user could not be found.
+        '200':
+          description: Car created!
+      parameters:
+      - in: body
+        name: car
+        discription: Create car
+        schema:
+          type: object
+          required:
+            - brand
+            - model
+            - year
+            - run
+          properties:
+            brand:
+              type: string
+            model:
+              type: string
+            year:
+              type: integer
+            run:
+              type: integer
+  /car/update:
+    put:
+      tags:
+      -  Car 
+      summary: Update car
+      security:
+      - bearerAuth: []
+      name: Update car
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      responses:
+        '422':
+          description: Validation failed!
+        '401':
+          description: A user could not be found.
+        '200':
+          description: Car updated!
+      parameters:
+      - in: body
+        name: car
+        discription: Update car
+        schema:
+          type: object
+          required:
+            - carId
+          properties:
+            brand:
+              type: string
+            model:
+              type: string
+            year:
+              type: integer
+            run:
+              type: integer
+            carId:
+              type: integer
+  /trip/all:
+    get:
+      tags:
+      - Trip 
+      summary: Get all user trips
+      security:
+      - bearerAuth: []
+      name: Get all user trips
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      responses:
+        '401':
+          description: A user could not be found.
+        '200':
+          description: Trips found! 
+  /trip/create:
+    post:
+      tags:
+      -  Trip 
+      summary: Create trip
+      security:
+      - bearerAuth: []
+      name: Create trip
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      responses:
+        '422':
+          description: Validation failed!
+        '401':
+          description: A user could not be found.
+        '200':
+          description: Trip created!
+      parameters:
+      - in: body
+        name: trip
+        discription: Create trip
+        schema:
+          type: object
+          required:
+            - startAddress
+            - endAddress
+            - price
+            - id
+          properties:
+            startAddress:
+              type: string
+            endAddress:
+              type: string
+            price:
+              type: number
+            id:
+              type: integer
+              format: userId
+
+definitions:
+  User:
+    type: object
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+      gender:
+        type: string
+      email:
+        type: string
+        format: email
+      password:
+        type: string
+        format: password
+      birthdayDate:
+        type: string
+      avatarUrl:
+        type: string
+      mobileNumber:
+        type: string
+      homeAddress:
+        type: string
+      workAddress:
+        type: string
+    required:
+    - firstName
+    - lastName
+    - gender
+    - email
+    - password
+  Driver:
+    type: object
+    properties:
+      experience:
+        type: string
+      condition:
+        type: string
+    required:
+    - experience
+    - condition
+  Car:
+    type: object
+    properties:
+      brand:
+        type: string
+      model:
+        type: string
+      year:
+        type: integer
+      run:
+        type: integer
+    required:
+    - brand
+    - model
+    - year
+    - run
+  Trip:
+    type: object
+    properties:
+      startAddress:
+        type: string
+      endAddress:
+        type: string
+      price:
+        type: float
+    required:
+    - startAddress
+    - endAddress
+    - price  
