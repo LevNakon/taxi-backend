@@ -17,6 +17,8 @@ const Driver = require('./models/driver');
 const Car = require('./models/car');
 const Trip = require('./models/trip');
 
+const port = process.env.PORT || 8080;
+
 const app = express();
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -54,7 +56,7 @@ sequelize.
     // sync({ force: true })
     sync()
     .then(res => {
-        const server = app.listen(8080);
+        const server = app.listen(port);
         taxiSocket(server);
     })
     .catch(error => {
