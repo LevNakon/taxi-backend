@@ -1,8 +1,9 @@
 const Sequelize = require('sequelize');
 
-const sequelize = require('../util/database');
+// const sequelize = require('../util/database');
+const db = require('../models');
 
-const Driver = sequelize.define('driver', {
+const Driver = db.sequelize.define('driver', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,

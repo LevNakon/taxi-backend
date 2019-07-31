@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 
+const db = require('./models');
+
 const swaggerDocument = YAML.load('./swagger.yml');
 const sequelize = require('./util/database');
 const { taxiSocket } = require('./util/socket');
@@ -52,13 +54,17 @@ Car.hasOne(Driver);
 Trip.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(Trip);
 
-sequelize.
-    // sync({ force: true })
-    sync()
-    .then(res => {
-        const server = app.listen(port);
-        taxiSocket(server);
-    })
-    .catch(error => {
-        console.log(error);
-    });
+db.sequelize.sync().then(function () {
+    const server = app.listen(port);
+    taxiSocket(server);
+});
+// sequelize.
+//     // sync({ force: true })
+//     sync()
+//     .then(res => {
+//         const server = app.listen(port);
+//         taxiSocket(server);
+//     })
+//     .catch(error => {
+//         console.log(error);
+//     });
