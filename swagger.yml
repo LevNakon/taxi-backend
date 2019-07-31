@@ -100,6 +100,8 @@ paths:
           description: A user could not be found.
         '200':
           description: User found!
+          schema:
+            $ref: '#/definitions/User'
   /user/update:
     put:
       tags:
@@ -157,7 +159,9 @@ paths:
         '401':
           description: A user could not be found.
         '200':
-          description: Driver found!  
+          description: Driver found! 
+          schema:
+            $ref: '#/definitions/Driver' 
       parameters:
       - in: query
         name: driverId
@@ -249,7 +253,9 @@ paths:
         '401':
           description: A user could not be found.
         '200':
-          description: Car found!  
+          description: Car found! 
+          schema:
+            $ref: '#/definitions/Car' 
       parameters:
       - in: query
         name: carId
@@ -351,7 +357,11 @@ paths:
         '401':
           description: A user could not be found.
         '200':
-          description: Trips found! 
+          description: Trips found!
+          schema:
+            type: array 
+            items:
+              $ref: '#/definitions/Trip'
   /trip/create:
     post:
       tags:
