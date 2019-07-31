@@ -7,3 +7,8 @@ node_js:
 branches:
   only:
     - master
+deploy:
+  provider: heroku
+  app: taxi-like-backend
+  api_key:
+    secure: 80d7c650-2542-4e1c-af7f-7c5e6d289c0a
