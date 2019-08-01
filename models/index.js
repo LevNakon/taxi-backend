@@ -47,9 +47,9 @@ if (!global.hasOwnProperty('db')) {
     // the application is executed on Heroku ... use the postgres database
     sequelize = new Sequelize(process.env.DATABASE_URL, {
       dialect: 'postgres',
-      protocol: 'postgres',
-      port: match[4],
-      host: match[3],
+      // protocol: 'postgres',
+      // port: match[4],
+      // host: match[3],
       logging: true //false
     });
   } else {
