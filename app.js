@@ -6,7 +6,6 @@ const YAML = require('yamljs');
 const db = require('./models');
 
 const swaggerDocument = YAML.load('./swagger.yml');
-const sequelize = require('./util/database');
 const { taxiSocket } = require('./util/socket');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
