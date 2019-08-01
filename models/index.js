@@ -1,25 +1,27 @@
-// 'use strict';
+'use strict';
 
-// const fs = require('fs');
-// const path = require('path');
-// const Sequelize = require('sequelize');
-// const basename = path.basename(__filename);
-// const env = process.env.NODE_ENV || 'development';
-// const config = require(__dirname + '/../config/config.json')[env];
-// const db = {};
+const fs = require('fs');
+const path = require('path');
+const Sequelize = require('sequelize');
+const basename = path.basename(__filename);
+const env = process.env.NODE_ENV || 'development';
+const config = require(__dirname + '/../config/config.json')[env];
+const db = {};
 
-// let sequelize;
-// if (config.use_env_variable) {
-//   sequelize = new Sequelize(process.env[config.use_env_variable], config);
-//   console.log(sequelize);
-// } else {
-//   sequelize = new Sequelize(config.database, config.username, config.password, config);
-//   console.log(sequelize);
-// }
+let sequelize;
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+} else {
+  sequelize = new Sequelize(
+    config.database, 
+    config.username, 
+    config.password, 
+    config);
+}
 
-// db.sequelize = sequelize;
-// db.Sequelize = Sequelize;
-// console.log('db----------------', db);
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+
 // fs
 //   .readdirSync(__dirname)
 //   .filter(file => {
@@ -36,41 +38,41 @@
 //   }
 // });
 
-// module.exports = db;
+module.exports = db;
 
-if (!global.hasOwnProperty('db')) {
-  var Sequelize = require('sequelize')
-    , sequelize = null
+// if (!global.hasOwnProperty('db')) {
+//   var Sequelize = require('sequelize')
+//     , sequelize = null
 
-  if (process.env.DATABASE_URL) {
-    console.log('db---------------',process.env.DATABASE_URL);
-    // the application is executed on Heroku ... use the postgres database
-    sequelize = new Sequelize(process.env.DATABASE_URL, {
-      dialect: 'postgres',
-      // protocol: 'postgres',
-      // port: match[4],
-      // host: match[3],
-      logging: true //false
-    });
-  } else {
-    // the application is executed on the local machine ... use mysql
-    sequelize = new Sequelize('root', 'root', 'root',
-      {
-        host: 'localhost',
-        dialect: 'postgres'
-      });
-  }
+//   if (process.env.DATABASE_URL) {
+//     console.log('db---------------',process.env.DATABASE_URL);
+//     // the application is executed on Heroku ... use the postgres database
+//     sequelize = new Sequelize(process.env.DATABASE_URL, {
+//       dialect: 'postgres',
+//       // protocol: 'postgres',
+//       // port: match[4],
+//       // host: match[3],
+//       logging: true //false
+//     });
+//   } else {
+//     // the application is executed on the local machine ... use mysql
+//     sequelize = new Sequelize('root', 'root', 'root',
+//       {
+//         host: 'localhost',
+//         dialect: 'postgres'
+//       });
+//   }
 
-  global.db = {
-    Sequelize: Sequelize,
-    sequelize: sequelize
-    // add your other models here
-  }
+//   global.db = {
+//     Sequelize: Sequelize,
+//     sequelize: sequelize
+//     // add your other models here
+//   }
 
-  /*
-    Associations can be defined here. E.g. like this:
-    global.db.User.hasMany(global.db.SomethingElse)
-  */
-}
+//   /*
+//     Associations can be defined here. E.g. like this:
+//     global.db.User.hasMany(global.db.SomethingElse)
+//   */
+// }
 
-module.exports = global.db
+// module.exports = global.db
