@@ -55,7 +55,6 @@ Trip.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(Trip);
 
 db.sequelize.sync().then(function () {
-    console.log(port);
     const server = app.listen(port);
     taxiSocket(server);
 });
